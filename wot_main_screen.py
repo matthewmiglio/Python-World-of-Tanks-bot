@@ -363,7 +363,6 @@ def handle_tribunal_popup(logger):
         time.sleep(1)
         
     
-    
 def check_for_tribunal_popup():
     current_image = screenshot()
     reference_folder = "tribunal_popup"
@@ -457,174 +456,56 @@ def check_if_on_wot_main():
     return check_for_location(locations)
 
 
-def find_t78():
-    current_image = screenshot()
-    reference_folder = "t78_logo"
-    references = [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-    ]
-
-    locations = find_references(
-        screenshot=current_image,
-        folder=reference_folder,
-        names=references,
-        tolerance=0.97
-    )
-    time.sleep(1)
-    return get_first_location(locations)
-
-
-def find_leo():
-    current_image = screenshot()
-    reference_folder = "leo_logo"
-    references = [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-        "5.png",
-    ]
-
-    locations = find_references(
-        screenshot=current_image,
-        folder=reference_folder,
-        names=references,
-        tolerance=0.97
-    )
-    time.sleep(1)
-    return get_first_location(locations)
-
-
-def find_t28():
-    current_image = screenshot()
-    reference_folder = "t28_logo"
-    references = [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-    ]
-
-    locations = find_references(
-        screenshot=current_image,
-        folder=reference_folder,
-        names=references,
-        tolerance=0.97
-    )
-    time.sleep(1)
-    return get_first_location(locations)
-
-
-def find_cruiser_mk2():
-    current_image = screenshot()
-    reference_folder = "cruiser_mk2_logo"
-    references = [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-        "5.png",
-    ]
-
-    locations = find_references(
-        screenshot=current_image,
-        folder=reference_folder,
-        names=references,
-        tolerance=0.97
-    )
-    time.sleep(1)
-    return get_first_location(locations)
-
-
-def find_emil1():
-    current_image = screenshot()
-    reference_folder = "emil1_logo"
-    references = [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-        "5.png",
-    ]
-
-    locations = find_references(
-        screenshot=current_image,
-        folder=reference_folder,
-        names=references,
-        tolerance=0.97
-    )
-    time.sleep(1)
-    return get_first_location(locations)
-
-
-def find_t1_heavy():
-    current_image = screenshot()
-    reference_folder = "t1_heavy_logo"
-    references = [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-        "5.png",
-    ]
-
-    locations = find_references(
-        screenshot=current_image,
-        folder=reference_folder,
-        names=references,
-        tolerance=0.97
-    )
-    time.sleep(1)
-    return get_first_location(locations)
-
-
-def select_tank(logger):
+def select_tank(logger,tank_prio):
+    #click tank. if its available start battle
+    slot_1_coords=[216,900]
+    slot_2_coords=[380,900]
+    slot_3_coords=[220,1010]
+    slot_4_coords=[380,1010]
     
-    #first in prio is emil1
-    coords = find_emil1()
-    check_quit_key_press()
-    if coords is not None:
-        logger.log("Choosing Emil1")
-        pydirectinput.click(coords[1], coords[0], clicks=3, interval=0.33)
-        if check_if_battle_button_exists():
-            logger.log("Emil1 is available atm. Starting battle")
+    #for each slot in tank prio:
+    #find out which slot is in the current prio index
+    #click it, then see if battle button appears. if it does, click start battle and return.
+    index=0
+    while index !=4:
+        logger.log(f"Checking tank in priority {index}.")
+        if tank_prio[index]==1:
+            logger.log("Checking tank in slot 1.")
+            pydirectinput.click(slot_1_coords[0],slot_1_coords[1],clicks=3,interval=0.2)
+            pydirectinput.moveTo(555,555)
+            if check_if_battle_button_exists():
+                logger.log("Slot 1 tank is ready. Starting battle.")
+                pydirectinput.click(960,50,clicks=2,interval=0.2)
             return
-    #next in prio is t1_heavy
-    coords = find_t1_heavy()
-    if coords is not None:
-        logger.log("Choosing t1_heavy")
-        pydirectinput.click(coords[1], coords[0], clicks=3, interval=0.33)
-        if check_if_battle_button_exists():
-            logger.log("t1_heavy is available atm. Starting battle")
+        if tank_prio[index]==2:
+            logger.log("Checking tank in slot 2.")
+            pydirectinput.click(slot_2_coords[0],slot_2_coords[1],clicks=3,interval=0.2)
+            pydirectinput.moveTo(555,555)
+            if check_if_battle_button_exists():
+                logger.log("Slot 2 tank is ready. Starting battle.")
+                pydirectinput.click(960,50,clicks=2,interval=0.2)
             return
-    #next in prio is t78
-    coords = find_t78()
-    if coords is not None:
-        logger.log("Choosing t78")
-        pydirectinput.click(coords[1], coords[0], clicks=3, interval=0.33)
-        if check_if_battle_button_exists():
-            logger.log("t78 is available atm. Starting battle")
+        if tank_prio[index]==3:
+            logger.log("Checking tank in slot 3.")
+            pydirectinput.click(slot_3_coords[0],slot_3_coords[1],clicks=3,interval=0.2)
+            pydirectinput.moveTo(555,555)
+            if check_if_battle_button_exists():
+                logger.log("Slot 3 tank is ready. Starting battle.")
+                pydirectinput.click(960,50,clicks=2,interval=0.2)
             return
-    #next in prio is t28
-    coords = find_t28()
-    if coords is not None:
-        logger.log("Choosing t28")
-        pydirectinput.click(coords[1], coords[0], clicks=3, interval=0.33)
-        if check_if_battle_button_exists():
-            logger.log("t28 is available atm. Starting battle")
+        if tank_prio[index]==4:
+            logger.log("Checking tank in slot 4.")
+            pydirectinput.click(slot_4_coords[0],slot_4_coords[1],clicks=3,interval=0.2)
+            pydirectinput.moveTo(555,555)
+            if check_if_battle_button_exists():
+                logger.log("Slot 4 tank is ready. Starting battle.")
+                pydirectinput.click(960,50,clicks=2,interval=0.2)
             return
-    #next in prio is cruiser_mk2
-    coords = find_cruiser_mk2()
-    if coords is not None:
-        logger.log("Choosing cruiser_mk2")
-        pydirectinput.click(coords[1], coords[0], clicks=3, interval=0.33)
-        if check_if_battle_button_exists():
-            logger.log("cruiser_mk2 is available atm. Starting battle")
-            return
-
+            
+        
+        
+        index=index+1
+    
 
 def check_if_battle_button_exists():
     ss=numpy.asarray(screenshot())

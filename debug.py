@@ -12,6 +12,9 @@ from wot_main_screen import check_for_tribunal_popup, wait_for_wot_main
 logger = Logger()
 
 
+while True:
+    plt.imshow(numpy.asarray(screenshot()))
+    plt.show()
 
 
 

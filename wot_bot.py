@@ -19,41 +19,22 @@ import pygetwindow
 from matplotlib import pyplot as plt
 from PIL import Image
 
-from aiming import (aim, aim_at_enemy, check_if_has_shot,
-                    consolidate_red_pix_into_coords, draw_picture_for_aiming,
-                    find_enemy, find_red_pix_in_image)
-from client import (check_if_start_WOT_buttom_is_orange, check_quit_key_press,
-                    orientate_client, orientate_WOT_launcher, screenshot,
-                    wait_for_start_WOT_buttom_to_be_orange)
+from client import check_quit_key_press, orientate_client
 from fight import (autorun, check_if_dead, check_if_in_battle, check_if_moving,
-                   check_if_waiting_for_battle, check_team_status,
-                   handle_last_alive, handle_tank_turning,
-                   make_beginning_tank_moves, move_turret_randomly, screenshot_minimap,
-                   turn_randomly, veer_left, veer_right)
-from image_rec import check_for_location, find_references
+                   check_if_waiting_for_battle, move_turret_randomly,
+                   screenshot_minimap)
 from logger import Logger
-from minimap import (determine_current_direction, determine_general_direction,
-                     draw_picture, find_myself_on_minimap,
-                     find_team_flags_on_minimap, look_for_flag_on_minimap,
-                     return_enemy_flag_coords)
-from wot_main_screen import (check_for_apply_manageable_exp_button,
-                             check_for_battle_results_popup,
-                             check_for_esc_menu, check_for_tour_of_duty_popup,
-                             check_if_battle_button_exists,
-                             check_if_in_details_menu, check_if_on_wot_main,
+from wot_main_screen import (check_if_on_wot_main,
                              collect_manageable_exp_from_main,
-                             find_details_button_in_details, find_emil1,
-                             find_scroll_in_details,
                              handle_battle_results_popups,
                              handle_manageable_exp, handle_mission_completed,
                              handle_tour_of_duty_popup, handle_tribunal_popup,
-                             restart_wot, scroll_up_in_details, select_tank,
-                             wait_for_wot_main)
+                             restart_wot, select_tank, wait_for_wot_main)
 
 logger = Logger()
 
 
-#region state methods
+
 def detect_state(logger):
     handle_battle_results_popups(logger)
     handle_mission_completed()
@@ -93,7 +74,7 @@ def start_state():
     return state
 
 
-def start_battle_state():
+def start_battle_state(tank_prio):
     #handling various popups that may still be in the way on the WoT main menu.
     handle_battle_results_popups(logger)
     handle_manageable_exp(logger)
@@ -107,7 +88,7 @@ def start_battle_state():
     logger.log("-------STATE=start_battle-------")
     # select da whip
     logger.log("Selecting tank")
-    select_tank(logger)
+    select_tank(logger,tank_prio)
     check_quit_key_press()
     
     #pydirectinput.click battle
@@ -265,9 +246,19 @@ def restart_state():
         return "restart"
     return "start"
 
-#endregion 
+
+
+
+
+
 
 def main():         
+    #user vars that will be changed through config file later
+    tank_prio=[3,2,1,4]
+    
+
+
+
     loops=0
     orientate_client("WoT client",logger,resize=[1936,1119])    
     time.sleep(1)
@@ -280,7 +271,7 @@ def main():
         if state=="start":                              
             state=start_state()
         if state=="start_battle":
-            state=start_battle_state()
+            state=start_battle_state(tank_prio)
         if state=="random_battle_fight":
             state=random_battle_fight_state(logger)
         if state=="battle_over": 

@@ -20,6 +20,7 @@ from matplotlib import pyplot as plt
 from PIL import Image
 
 from client import check_quit_key_press, orientate_client
+from configuration import load_user_settings
 from fight import (autorun, check_if_dead, check_if_in_battle, check_if_moving,
                    check_if_waiting_for_battle, move_turret_randomly,
                    screenshot_minimap)
@@ -254,7 +255,8 @@ def restart_state():
 
 def main():         
     #user vars that will be changed through config file later
-    tank_prio=[3,2,1,4]
+    user_settings = load_user_settings()
+    tank_prio=user_settings["tank_priority_stack"]
     
 
 

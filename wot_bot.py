@@ -278,7 +278,6 @@ def main():
         if state=="random_battle_fight":
             state=random_battle_fight_state(logger)
         if state=="battle_over": 
-            
             state=battle_over_state()
         if state=="quit":
             sys.exit()

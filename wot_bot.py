@@ -258,7 +258,8 @@ def main():
     
 
 
-
+    #main loop
+    
     loops=0
     orientate_client("WoT client",logger,resize=[1936,1119])    
     time.sleep(1)

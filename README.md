@@ -43,3 +43,6 @@ Run the desktop shortcut the installer created.
 ```
 tank_priority_stack: [4,1,3,2]
 ```
+
+
+4. Use ctrl+ to maximize minimap once manually while in game 

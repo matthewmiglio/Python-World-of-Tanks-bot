@@ -234,11 +234,11 @@ def battle_over_state():
     return "start"
 
 
-def restart_state():
+def restart_state(launcher_path):
     check_quit_key_press()
     orientate_client("WoT client",logger,resize=[1936,1119])
     time.sleep(1)
-    if restart_wot(logger)=="quit":
+    if restart_wot(logger,launcher_path)=="quit":
         return "restart"
     return "start"
 
@@ -253,6 +253,8 @@ def main():
     user_settings = load_user_settings()
     tank_prio=user_settings["tank_priority_stack"]
     
+    launcher_path=r"B:\Games\World_of_Tanks_NA\wgc_api.exe"
+    
 
 
     #main loop
@@ -265,7 +267,7 @@ def main():
         loops=loops+1
         logger.log(f"Loops: {loops}")
         if state=="restart":                              
-            state=restart_state()
+            state=restart_state(launcher_path)
         if state=="start":                              
             state=start_state()
         if state=="start_battle":

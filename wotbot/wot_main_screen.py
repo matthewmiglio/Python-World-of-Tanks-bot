@@ -308,7 +308,7 @@ def check_for_esc_menu():
         time.sleep(0.2)
 
 
-def restart_wot(logger):
+def restart_wot(logger,launcher_path):
     logger.log("Trying to close WoT window.")
     try:
         logger.log("Closing WoT window")
@@ -319,7 +319,7 @@ def restart_wot(logger):
         logger.log("Game is not already open. No matter.")
         
     logger.log("Opening WOT launcher.")
-    wot_launcher_path=r"B:\Games\World_of_Tanks_NA\wgc_api.exe"
+    wot_launcher_path=launcher_path
     os.system(wot_launcher_path)
     time.sleep(3)
     

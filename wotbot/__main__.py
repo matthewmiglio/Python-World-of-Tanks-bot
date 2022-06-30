@@ -252,8 +252,7 @@ def main():
     #user vars that will be changed through config file later
     user_settings = load_user_settings()
     tank_prio=user_settings["tank_priority_stack"]
-    
-    launcher_path=r"B:\Games\World_of_Tanks_NA\wgc_api.exe"
+    launcher_path=user_settings["launcher_path"]
     
 
 

@@ -504,7 +504,7 @@ def select_tank(logger, tank_prio):
             if check_if_battle_button_exists():
                 logger.log("Slot 1 tank is ready. Starting battle.")
                 pydirectinput.click(960, 50, clicks=2, interval=0.2)
-            return
+                return
         if tank_prio[index] == 2:
             logger.log("Checking tank in slot 2.")
             pydirectinput.click(
@@ -516,7 +516,7 @@ def select_tank(logger, tank_prio):
             if check_if_battle_button_exists():
                 logger.log("Slot 2 tank is ready. Starting battle.")
                 pydirectinput.click(960, 50, clicks=2, interval=0.2)
-            return
+                return
         if tank_prio[index] == 3:
             logger.log("Checking tank in slot 3.")
             pydirectinput.click(
@@ -528,7 +528,7 @@ def select_tank(logger, tank_prio):
             if check_if_battle_button_exists():
                 logger.log("Slot 3 tank is ready. Starting battle.")
                 pydirectinput.click(960, 50, clicks=2, interval=0.2)
-            return
+                return
         if tank_prio[index] == 4:
             logger.log("Checking tank in slot 4.")
             pydirectinput.click(
@@ -540,7 +540,7 @@ def select_tank(logger, tank_prio):
             if check_if_battle_button_exists():
                 logger.log("Slot 4 tank is ready. Starting battle.")
                 pydirectinput.click(960, 50, clicks=2, interval=0.2)
-            return
+                return
 
         index = index + 1
 

@@ -1,6 +1,3 @@
-
-
-
 import time
 
 from wotbot.fight import check_if_in_battle, screenshot_minimap

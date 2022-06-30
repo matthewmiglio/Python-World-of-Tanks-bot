@@ -13,35 +13,35 @@ from wotbot.image_rec import (find_references, get_first_location,
 
 
 def wait_for_start_WOT_buttom_to_be_orange():
-    is_orange=check_if_start_WOT_buttom_is_orange()
-    loops=0
+    is_orange = check_if_start_WOT_buttom_is_orange()
+    loops = 0
     while not(is_orange):
         check_quit_key_press()
-        loops=loops+1
+        loops = loops + 1
         time.sleep(1)
         print(f"Waiting for start button: {loops}")
-        is_orange=check_if_start_WOT_buttom_is_orange()
-    
-    
+        is_orange = check_if_start_WOT_buttom_is_orange()
+
+
 def check_if_start_WOT_buttom_is_orange():
-    ss=screenshot()
-    ss=numpy.asarray(ss)
-    pix1=ss[534][104]
-    pix2=ss[534][220]
-    pix3=ss[538][104]
-    
+    ss = screenshot()
+    ss = numpy.asarray(ss)
+    pix1 = ss[534][104]
+    pix2 = ss[534][220]
+    pix3 = ss[538][104]
+
     # print(pix1)
     # print(pix2)
     # print(pix3)
-    
-    sentinel=[255,43,5]
-    is_orange=False
-    if (pixel_is_equal(pix1,sentinel,tol=45)):
-        is_orange=True
-    if (pixel_is_equal(pix2,sentinel,tol=45)):
-        is_orange=True
-    if (pixel_is_equal(pix3,sentinel,tol=45)):
-        is_orange=True
+
+    sentinel = [255, 43, 5]
+    is_orange = False
+    if (pixel_is_equal(pix1, sentinel, tol=45)):
+        is_orange = True
+    if (pixel_is_equal(pix2, sentinel, tol=45)):
+        is_orange = True
+    if (pixel_is_equal(pix3, sentinel, tol=45)):
+        is_orange = True
     return is_orange
 
 
@@ -51,10 +51,10 @@ def orientate_WOT_launcher():
     launcher_window.minimize()
     launcher_window.restore()
     launcher_window.moveTo(0, 0)
-    launcher_window.resizeTo(800, 600) # set size to 100x100
+    launcher_window.resizeTo(800, 600)  # set size to 100x100
 
 
-def orientate_client(title,logger,resize=None):
+def orientate_client(title, logger, resize=None):
     try:
         client_window = pygetwindow.getWindowsWithTitle(
             title)[0]
@@ -63,9 +63,9 @@ def orientate_client(title,logger,resize=None):
         client_window.moveTo(0, 0)
         if resize is not None:
             client_window.resizeTo(resize[0], resize[1])
-    except: 
+    except BaseException:
         logger.log("Could not find client.")
-  
+
 
 def check_if_windows_exist(logger):
     try:
@@ -164,9 +164,9 @@ def check_quit_key_press():
     if keyboard.is_pressed("pause"):
         print("Pausing program until pause is held again")
         time.sleep(2)
-        pressed=False
+        pressed = False
         while not(pressed):
             time.sleep(0.05)
             if keyboard.is_pressed("pause"):
                 print("Pause held again. Resuming program.")
-                pressed=True 
+                pressed = True

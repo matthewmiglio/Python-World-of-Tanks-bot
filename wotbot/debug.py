@@ -15,8 +15,3 @@ logger = Logger()
 while True:
     plt.imshow(numpy.asarray(screenshot()))
     plt.show()
-
-
-
-
-

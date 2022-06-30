@@ -38,7 +38,7 @@ class Logger:
         losses_str = str(self.losses) + "L"
         fights_str = str(self.fights) + " Fights"
         gap_str = "|"
-        return gap_str + fights_str + gap_str 
+        return gap_str + fights_str + gap_str
 
     def convert_int_to_time(self, seconds):
         """convert epoch to time

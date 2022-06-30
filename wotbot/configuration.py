@@ -22,9 +22,16 @@ def create_config_file():
     if not exists(config_file):
         with open(config_file, "w") as f:
             default_config = {
-                "tank_priority_stack": [1, 2, 3, 4],
-                "launcher_path": join("B:\\","Games","World_of_Tanks_NA","wgc_api.exe")
-            }
+                "tank_priority_stack": [
+                    1,
+                    2,
+                    3,
+                    4],
+                "launcher_path": join(
+                    "B:\\",
+                    "Games",
+                    "World_of_Tanks_NA",
+                    "wgc_api.exe")}
             f.write(json.dumps(default_config, indent=4))
 
 

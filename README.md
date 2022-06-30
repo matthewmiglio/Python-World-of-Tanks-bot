@@ -13,11 +13,13 @@ A World of Tanks automation bot written in Python.
 #### Graphics
 
     display mode: Windowed
-    resolution: 1920x1020
+    resolution: 1920x1020*
     interface scaling: x1
-    color adjustment: 1940s cine film
+    color adjustment: 1940s cine film**
 
-    *color adjustment is theoretically unnecessary but image recognition problems may occur on varying color adjustment settings.
+    *if this resolution is all or most of your screen, taskbars placed on the sides or bottom of the screen may obstruct the bot.
+    **color adjustment is theoretically unnecessary but image recognition problems may occur on varying color adjustment settings.
+
 
 <br>
 
@@ -38,6 +40,7 @@ All configuration is through **`lib\pyclashbot\config.json`**,
 #### Launcher Path
 
 Define your launcher path as the absolute path to **`wgc_api.exe`**
+Make sure to use double slash 
 
 #### Tank Priority
 

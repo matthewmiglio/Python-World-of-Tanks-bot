@@ -12,10 +12,11 @@ A World of Tanks automation bot written in Python.
 
 #### Graphics
 
-    display mode: Windowed
-    resolution: 1920x1020*
-    interface scaling: x1
-    color adjustment: 1940s cine film**
+    -display mode: Windowed
+    -resolution: 1920x1020*
+    -interface scaling: x1
+    -color adjustment: 1940s cine film**
+    -Use ctrl+ to maximize minimap once manually while in game 
 
     *if this resolution is all or most of your screen, taskbars placed on the sides or bottom of the screen may obstruct the bot.
     **color adjustment is theoretically unnecessary but image recognition problems may occur on varying color adjustment settings.
@@ -60,4 +61,3 @@ tank_priority_stack: [4,1,3,2]
 ```
 
 
-4. Use ctrl+ to maximize minimap once manually while in game 

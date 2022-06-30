@@ -142,9 +142,10 @@ def random_battle_fight_state(logger):
     alive=True
     while alive:
         check_quit_key_press()
+        
         #save screenshot of minimap for use for data in the future
-        logger.log("Screenshotting minimap for later use.")
-        screenshot_minimap()
+        # logger.log("Screenshotting minimap for later use.")
+        # screenshot_minimap()
             
         #start moving
         logger.log("Starting moving.")

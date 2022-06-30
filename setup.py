@@ -37,11 +37,11 @@ setup(
         'matplotlib',
         'pyautogui',
         'joblib',
-        'keyboard'
-    ],
+        'keyboard'],
     packages=['wotbot'],
     include_package_data=True,
-    package_data={'wotbot': dist_files},
+    package_data={
+        'wotbot': dist_files},
     python_requires='>=3.10',
     zip_safe=False,
     classifiers=[

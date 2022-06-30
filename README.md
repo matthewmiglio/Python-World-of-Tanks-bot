@@ -19,6 +19,8 @@ A World of Tanks automation bot written in Python.
 
     *color adjustment is theoretically unnecessary but image recognition problems may occur on varying color adjustment settings.
 
+<br>
+
 ## Run World-of-Tanks-bot
 
 Before attempting to run the bot, make sure both the World of Tanks client is open.
@@ -27,7 +29,17 @@ Before attempting to run the bot, make sure both the World of Tanks client is op
 
 Run the desktop shortcut the installer created.
 
+<br>
+
 ## Configuration
+
+All configuration is through **`lib\pyclashbot\config.json`**,
+
+#### Launcher Path
+
+Define your launcher path as the absolute path to **`wgc_api.exe`**
+
+#### Tank Priority
 
 1. Set only four primary tanks in the garage
 
@@ -38,7 +50,7 @@ Run the desktop shortcut the installer created.
 | Tank 3 | Tank 4 |
 ```
 
-3. Define a priority stack in lib\pyclashbot\config.json, with the first being highest priority.
+3. Define a priority stack, with the first being highest priority.
 
 ```
 tank_priority_stack: [4,1,3,2]

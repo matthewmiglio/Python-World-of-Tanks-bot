@@ -13,25 +13,24 @@ from wotbot.wot_main_screen import wait_for_wot_main
 
 
 def screenshot_minimap():
-    region=[1300,485,620,595]
-    ss=screenshot(region)
-    t=time.localtime()
-    path=r"C:\Users\Matt\Desktop\1\my Programs\wot-bot\reference_images\minimap_reference_screenshots"
-    ss.save(f"{path}\{t}.png")
+    region = [1300, 485, 620, 595]
+    ss = screenshot(region)
+    t = time.localtime()
+    path = r"C:\Users\Matt\Desktop\1\my Programs\wot-bot\reference_images\minimap_reference_screenshots"
+    ss.save(f"{path}\\{t}.png")
 
 
 def make_beginning_tank_moves():
 
-
-#once team passes, move uninterrupted for 10 sec to move away from flag to allow clean image detection         
-    #turn either left or right randomly then try to move
-    n=random.randint(1,2)
-    s=random.randint(0,2)
-    if n==1:
+    # once team passes, move uninterrupted for 10 sec to move away from flag to allow clean image detection
+    # turn either left or right randomly then try to move
+    n = random.randint(1, 2)
+    s = random.randint(0, 2)
+    if n == 1:
         pydirectinput.keyDown('a')
         time.sleep(s)
         pydirectinput.keyUp('a')
-    if n==2:
+    if n == 2:
         pydirectinput.keyDown('d')
         time.sleep(s)
         pydirectinput.keyUp('d')
@@ -42,18 +41,18 @@ def make_beginning_tank_moves():
     pydirectinput.press('r')
     time.sleep(0.2)
     print("Moving away from flag")
-#move away from flag
-    time_spent_running=0
+# move away from flag
+    time_spent_running = 0
     autorun()
-    moving=check_if_moving()
-    while time_spent_running<3:
-        while (moving)and(time_spent_running<3):
+    moving = check_if_moving()
+    while time_spent_running < 3:
+        while (moving) and (time_spent_running < 3):
             check_quit_key_press()
-            time_spent_running=time_spent_running+1
+            time_spent_running = time_spent_running + 1
             print(time_spent_running)
             time.sleep(1)
-            moving=check_if_moving()
-        if time_spent_running<3:
+            moving = check_if_moving()
+        if time_spent_running < 3:
             check_quit_key_press()
             pydirectinput.keyDown('s')
             time.sleep(3)
@@ -61,24 +60,23 @@ def make_beginning_tank_moves():
             turn_randomly()
             autorun()
             time.sleep(2)
-            moving=check_if_moving()
+            moving = check_if_moving()
     print("Done making beginning moves.")
     pydirectinput.press('s')
     time.sleep(0.5)
-    
-    
+
+
 def turn_randomly():
-    n=1
-    s=random.randint(1,3)
+    n = 1
+    s = random.randint(1, 3)
     pydirectinput.keyDown('s')
     time.sleep(2)
     pydirectinput.keyUp('s')
-    if n==1:
+    if n == 1:
         pydirectinput.keyDown('a')
         time.sleep(s)
         pydirectinput.keyUp('a')
 
-    
 
 def autorun():
     pydirectinput.press('r')
@@ -89,8 +87,8 @@ def autorun():
     time.sleep(0.1)
     pydirectinput.press('r')
     time.sleep(0.1)
-    
- 
+
+
 def check_if_waiting_for_battle():
     current_image = screenshot()
     reference_folder = "waiting_for_random_battle_logo"
@@ -129,7 +127,7 @@ def check_if_dead():
         "12.png",
         "13.png",
         "14.png",
-        
+
     ]
     locations = find_references(
         screenshot=current_image,
@@ -141,14 +139,14 @@ def check_if_dead():
 
 
 def check_if_moving():
-    moving=True
-    count=10
-    while count>0:
-        moving=check_moving()
+    moving = True
+    count = 10
+    while count > 0:
+        moving = check_moving()
         if moving is False:
             return False
         time.sleep(0.15)
-        count=count-1
+        count = count - 1
     return True
 
 
@@ -223,7 +221,7 @@ def check_moving():
         "62.png",
         "63.png",
         "64.png",
-        
+
     ]
 
     locations = find_references(
@@ -239,28 +237,28 @@ def check_moving():
         return True
 
 
-def handle_tank_turning(current_direction,general_direction,logger):
-    #if either params are empty for some reason turn randomly
-    if (current_direction is None)or(general_direction is None):
-        s=random.randint(0,2)
-        n=random.randint(1,2)
-        if n==1:
+def handle_tank_turning(current_direction, general_direction, logger):
+    # if either params are empty for some reason turn randomly
+    if (current_direction is None) or (general_direction is None):
+        s = random.randint(0, 2)
+        n = random.randint(1, 2)
+        if n == 1:
             pydirectinput.keyDown('s')
             pydirectinput.keyDown('a')
             time.sleep(s)
             pydirectinput.keyUp('s')
             pydirectinput.keyUp('a')
             time.sleep(0.5)
-        else:   
+        else:
             pydirectinput.keyDown('s')
             pydirectinput.keyDown('d')
             time.sleep(s)
             pydirectinput.keyUp('s')
             pydirectinput.keyUp('d')
             time.sleep(0.5)
-    
-    #if current direction returned stuck we 180
-    if current_direction=="stuck":
+
+    # if current direction returned stuck we 180
+    if current_direction == "stuck":
         print("Tank stuck. Turning slightly.")
         pydirectinput.keyDown('s')
         time.sleep(2)
@@ -269,47 +267,59 @@ def handle_tank_turning(current_direction,general_direction,logger):
         time.sleep(2)
         pydirectinput.keyUp('a')
         return
-    
-#region turn_logic
-    turn_to_make=""
-    cd=current_direction
-    gd=general_direction
-    
-    #handle no turns
-    if (cd==gd)and(cd is not None)and(gd is not None):
-        turn_to_make="No turn"
-    
-    #handle left turns
-    if (cd==[1,0,0,1])and(gd==[1,0,1,0]): turn_to_make="left"
-    if (cd==[0,1,0,1])and(gd==[1,0,0,1]): turn_to_make="left"
-    if (cd==[1,0,0,1])and(gd==[0,1,1,0]): turn_to_make="left"
-    if (cd==[0,1,1,0])and(gd==[0,1,0,1]): turn_to_make="left"
-    
-    #handle right turns
-    if (cd==[0,1,1,0])and(gd==[1,0,1,0]): turn_to_make="right"
-    if (cd==[1,0,1,0])and(gd==[1,0,0,1]): turn_to_make="right"
-    if (cd==[0,1,0,1])and(gd==[0,1,1,0]): turn_to_make="right"
-    if (cd==[1,0,0,1])and(gd==[0,1,0,1]): turn_to_make="right"
-    
-    #handle 180 turns
-    if (cd==[0,1,0,1])and(gd==[1,0,1,0]): turn_to_make="180"
-    if (cd==[0,1,1,0])and(gd==[1,0,0,1]): turn_to_make="180"
-    if (cd==[1,0,0,1])and(gd==[0,1,1,0]): turn_to_make="180"
-    if (cd==[1,0,1,0])and(gd==[0,1,0,1]): turn_to_make="180"
-    
+
+# region turn_logic
+    turn_to_make = ""
+    cd = current_direction
+    gd = general_direction
+
+    # handle no turns
+    if (cd == gd) and (cd is not None) and (gd is not None):
+        turn_to_make = "No turn"
+
+    # handle left turns
+    if (cd == [1, 0, 0, 1]) and (gd == [1, 0, 1, 0]):
+        turn_to_make = "left"
+    if (cd == [0, 1, 0, 1]) and (gd == [1, 0, 0, 1]):
+        turn_to_make = "left"
+    if (cd == [1, 0, 0, 1]) and (gd == [0, 1, 1, 0]):
+        turn_to_make = "left"
+    if (cd == [0, 1, 1, 0]) and (gd == [0, 1, 0, 1]):
+        turn_to_make = "left"
+
+    # handle right turns
+    if (cd == [0, 1, 1, 0]) and (gd == [1, 0, 1, 0]):
+        turn_to_make = "right"
+    if (cd == [1, 0, 1, 0]) and (gd == [1, 0, 0, 1]):
+        turn_to_make = "right"
+    if (cd == [0, 1, 0, 1]) and (gd == [0, 1, 1, 0]):
+        turn_to_make = "right"
+    if (cd == [1, 0, 0, 1]) and (gd == [0, 1, 0, 1]):
+        turn_to_make = "right"
+
+    # handle 180 turns
+    if (cd == [0, 1, 0, 1]) and (gd == [1, 0, 1, 0]):
+        turn_to_make = "180"
+    if (cd == [0, 1, 1, 0]) and (gd == [1, 0, 0, 1]):
+        turn_to_make = "180"
+    if (cd == [1, 0, 0, 1]) and (gd == [0, 1, 1, 0]):
+        turn_to_make = "180"
+    if (cd == [1, 0, 1, 0]) and (gd == [0, 1, 0, 1]):
+        turn_to_make = "180"
+
    # return turn_to_make
-#endregion
-    
-    
-#region make_turns
-    #if no turns
-    if turn_to_make=="No turn":
+# endregion
+
+
+# region make_turns
+    # if no turns
+    if turn_to_make == "No turn":
         logger.log("Making no turn.")
         return
-    
-    #if left turn
-    if turn_to_make=="left":
-        s=random.randint(1,3)
+
+    # if left turn
+    if turn_to_make == "left":
+        s = random.randint(1, 3)
         logger.log(f"Making left turn with duration of {s} seconds")
         pydirectinput.keyDown('s')
         time.sleep(1.3)
@@ -317,11 +327,10 @@ def handle_tank_turning(current_direction,general_direction,logger):
         pydirectinput.keyDown('a')
         time.sleep(s)
         pydirectinput.keyUp('a')
-        
-    
-    #if right turn
-    if turn_to_make=="right":
-        s=random.randint(1,3)
+
+    # if right turn
+    if turn_to_make == "right":
+        s = random.randint(1, 3)
         logger.log(f"Making right turn with duration of {s} seconds")
         pydirectinput.keyDown('s')
         time.sleep(1.3)
@@ -329,11 +338,10 @@ def handle_tank_turning(current_direction,general_direction,logger):
         pydirectinput.keyDown('d')
         time.sleep(s)
         pydirectinput.keyUp('d')
-        
-    
-    #if 180
-    if turn_to_make=="180":
-        s=5.5
+
+    # if 180
+    if turn_to_make == "180":
+        s = 5.5
         logger.log(f"Making 180 turn using duration of {s} seconds")
         pydirectinput.keyDown('s')
         time.sleep(1.3)
@@ -341,16 +349,13 @@ def handle_tank_turning(current_direction,general_direction,logger):
         pydirectinput.keyDown('d')
         time.sleep(s)
         pydirectinput.keyUp('d')
-        
-    
-    
-#endregion
-    
-    
+
+
+# endregion
 
 
 def check_team_status():
-    team_status = [0]*8
+    team_status = [0] * 8
 
     region0 = [15, 98, 50, 20]
     region1 = [15, 123, 50, 20]
@@ -391,23 +396,22 @@ def check_team_status():
 
     teammates_alive = sum(team_status)
 
-
-    #print(team_status)
+    # print(team_status)
     return teammates_alive
 
 
 def move_turret_randomly():
-    n=random.randint(1,4)
-    if n==1:
+    n = random.randint(1, 4)
+    if n == 1:
         pydirectinput.press('left')
-    if n==2:
+    if n == 2:
         pydirectinput.press('right')
-    if n==3:
+    if n == 3:
         pydirectinput.keyDown('up')
         time.sleep(1.5)
         pydirectinput.keyUp('up')
 
-    if n==4:
+    if n == 4:
         pydirectinput.keyDown('down')
         time.sleep(1.5)
         pydirectinput.keyUp('down')
@@ -415,18 +419,18 @@ def move_turret_randomly():
 
 def veer_left():
     check_quit_key_press()
-    n=random.randint(1,10)
-    n=(n/4.3)
+    n = random.randint(1, 10)
+    n = (n / 4.3)
     pydirectinput.keyDown('a')
     time.sleep(n)
     pydirectinput.keyUp('a')
     time.sleep(3)
 
 
-def veer_right():  
+def veer_right():
     check_quit_key_press()
-    n=random.randint(1,10)
-    n=(n/4.3)
+    n = random.randint(1, 10)
+    n = (n / 4.3)
     pydirectinput.keyDown('d')
     time.sleep(n)
     pydirectinput.keyUp('d')
@@ -442,22 +446,22 @@ def handle_last_alive(logger):
         time.sleep(1)
         pydirectinput.click(960, 542, clicks=3, interval=0.2)
         time.sleep(1)
-        pydirectinput.moveTo(500, 500,duration=0.2)
+        pydirectinput.moveTo(500, 500, duration=0.2)
         time.sleep(1)
         pydirectinput.click(1041, 751, clicks=6, interval=0.2)
         time.sleep(1)
-        pydirectinput.moveTo(500, 500,duration=0.2)
+        pydirectinput.moveTo(500, 500, duration=0.2)
         time.sleep(1)
         pydirectinput.click(1041, 751, clicks=6, interval=0.2)
         time.sleep(1)
-        pydirectinput.moveTo(500, 500,duration=0.2)
+        pydirectinput.moveTo(500, 500, duration=0.2)
         time.sleep(1)
-        if wait_for_wot_main(logger) =="quit":
+        if wait_for_wot_main(logger) == "quit":
             return "quit"
         time.sleep(3)
-        
+
         return "deserted"
-   
+
 
 def check_if_in_battle():
     current_image = screenshot()
@@ -468,8 +472,8 @@ def check_if_in_battle():
         "3.png",
         "4.png",
         "5.png",
-        
-        
+
+
     ]
 
     locations = find_references(
@@ -479,7 +483,3 @@ def check_if_in_battle():
         tolerance=0.97
     )
     return check_for_location(locations)
-
-
-
-    

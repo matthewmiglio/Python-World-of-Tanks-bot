@@ -1,17 +1,9 @@
 
 
 import multiprocessing
-import os
 import random
 import sys
 import time
-from ast import YieldFrom
-from cmath import e
-from enum import auto
-from gc import collect
-from gettext import find
-from operator import is_
-from unittest.mock import sentinel
 
 import numpy
 import pydirectinput
@@ -19,18 +11,20 @@ import pygetwindow
 from matplotlib import pyplot as plt
 from PIL import Image
 
-from client import check_quit_key_press, orientate_client
-from configuration import load_user_settings
-from fight import (autorun, check_if_dead, check_if_in_battle, check_if_moving,
-                   check_if_waiting_for_battle, move_turret_randomly,
-                   screenshot_minimap)
-from logger import Logger
-from wot_main_screen import (check_if_on_wot_main,
-                             collect_manageable_exp_from_main,
-                             handle_battle_results_popups,
-                             handle_manageable_exp, handle_mission_completed,
-                             handle_tour_of_duty_popup, handle_tribunal_popup,
-                             restart_wot, select_tank, wait_for_wot_main)
+from wotbot.client import check_quit_key_press, orientate_client
+from wotbot.configuration import load_user_settings
+from wotbot.fight import (autorun, check_if_dead, check_if_in_battle,
+                          check_if_moving, check_if_waiting_for_battle,
+                          move_turret_randomly, screenshot_minimap)
+from wotbot.logger import Logger
+from wotbot.wot_main_screen import (check_if_on_wot_main,
+                                    collect_manageable_exp_from_main,
+                                    handle_battle_results_popups,
+                                    handle_manageable_exp,
+                                    handle_mission_completed,
+                                    handle_tour_of_duty_popup,
+                                    handle_tribunal_popup, restart_wot,
+                                    select_tank, wait_for_wot_main)
 
 logger = Logger()
 

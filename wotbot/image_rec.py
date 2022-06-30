@@ -5,9 +5,9 @@ from typing import Union
 
 import cv2
 import numpy
+import pyautogui
 from joblib import Parallel, delayed
 from PIL import Image
-import pyautogui
 
 
 def screenshot(region=(0, 0, 1920, 1080)):

@@ -1,6 +1,6 @@
-from os.path import dirname, join, exists
 import json
 import sys
+from os.path import dirname, exists, join
 
 top_level = dirname(__file__)
 config_file = join(top_level, 'config.json')

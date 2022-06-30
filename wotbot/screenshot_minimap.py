@@ -2,8 +2,8 @@
 
 
 import time
-from fight import check_if_in_battle, screenshot_minimap
 
+from wotbot.fight import check_if_in_battle, screenshot_minimap
 
 while True:
     if check_if_in_battle():

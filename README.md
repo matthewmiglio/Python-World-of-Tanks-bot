@@ -1,5 +1,7 @@
 # World-of-Tanks-bot
 
+[![Python Test](https://github.com/matthewmiglio/Python-World-of-Tanks-bot/actions/workflows/python-tests.yml/badge.svg)](https://github.com/matthewmiglio/Python-World-of-Tanks-bot/actions/workflows/python-tests.yml)
+
 A World of Tanks automation bot written in Python.
 
 ## Install

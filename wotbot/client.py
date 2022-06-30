@@ -5,14 +5,11 @@ import time
 import keyboard
 import numpy
 import pyautogui
-import pygetwindow
 import pydirectinput
+import pygetwindow
 
-from image_rec import find_references, get_first_location, pixel_is_equal
-
-
-
-
+from wotbot.image_rec import (find_references, get_first_location,
+                              pixel_is_equal)
 
 
 def wait_for_start_WOT_buttom_to_be_orange():

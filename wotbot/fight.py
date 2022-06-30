@@ -1,14 +1,15 @@
+import random
+import time
 
-
-from matplotlib import pyplot as plt
 import numpy
 import pydirectinput
-import time
-import random
-from client import check_quit_key_press, refresh_screen, screenshot
-from image_rec import check_for_location, find_references, get_avg_pix, pixel_is_equal
-from minimap import determine_current_direction, find_myself_on_minimap
-from wot_main_screen import wait_for_wot_main
+from matplotlib import pyplot as plt
+
+from wotbot.client import check_quit_key_press, refresh_screen, screenshot
+from wotbot.image_rec import (check_for_location, find_references, get_avg_pix,
+                              pixel_is_equal)
+from wotbot.minimap import determine_current_direction, find_myself_on_minimap
+from wotbot.wot_main_screen import wait_for_wot_main
 
 
 def screenshot_minimap():

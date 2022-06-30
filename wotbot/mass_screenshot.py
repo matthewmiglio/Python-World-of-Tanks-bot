@@ -3,12 +3,10 @@ import time
 from os.path import join
 
 import numpy
-from PIL import Image
 import pyautogui
+from PIL import Image
 
-from client import screenshot
-
-
+from wotbot.client import screenshot
 
 
 def screenshot_around_mouse():

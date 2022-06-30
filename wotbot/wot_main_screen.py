@@ -1,14 +1,18 @@
 import os
 import random
 import time
-from cv2 import getWindowImageRect
-from matplotlib import pyplot as plt
+
 import numpy
 import pydirectinput
 import pygetwindow
+from cv2 import getWindowImageRect
+from matplotlib import pyplot as plt
 
-from client import  check_quit_key_press, orientate_WOT_launcher, screenshot, wait_for_start_WOT_buttom_to_be_orange
-from image_rec import check_for_location, coords_is_equal, find_references, get_first_location, pixel_is_equal
+from wotbot.client import (check_quit_key_press, orientate_WOT_launcher,
+                           screenshot, wait_for_start_WOT_buttom_to_be_orange)
+from wotbot.image_rec import (check_for_location, coords_is_equal,
+                              find_references, get_first_location,
+                              pixel_is_equal)
 
 
 def collect_manageable_exp_from_main():

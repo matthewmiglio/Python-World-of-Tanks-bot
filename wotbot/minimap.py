@@ -1,10 +1,14 @@
 from types import NoneType
-import PIL
+
 import numpy
-from client import check_quit_key_press, screenshot
-from image_rec import coords_is_equal, find_references, get_first_location, pixel_is_equal
+import PIL
 from matplotlib import pyplot as plt
 from PIL import Image
+
+from wotbot.client import check_quit_key_press, screenshot
+from wotbot.image_rec import (coords_is_equal, find_references, get_first_location,
+                       pixel_is_equal)
+
 
 def determine_general_direction(myself_coords,enemy_flag_coords):
     #[up,down,left,right]

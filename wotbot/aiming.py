@@ -1,19 +1,19 @@
 
 
 
-from operator import is_
 import random
 import time
-from tokenize import cookie_re
-from matplotlib import pyplot as plt
+from operator import is_
+
 import numpy
-from client import check_quit_key_press, screenshot
-from image_rec import coords_is_equal, pixel_is_equal
 import pydirectinput
+from matplotlib import pyplot as plt
 from PIL import Image
 
+from wotbot.client import check_quit_key_press, screenshot
+from wotbot.image_rec import coords_is_equal, pixel_is_equal
 
-    
+
 def amt_to_aim_calculator(pix_to_move):
     #takes in pixels to move and returns a duration in seconds to use for turning camera
     return (pix_to_move*pix_to_move)/150000

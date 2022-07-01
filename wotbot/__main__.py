@@ -69,6 +69,10 @@ def start_state():
 
 
 def start_battle_state(tank_prio):
+    if not(check_if_on_wot_main()):
+        logger.log("start_battle_state got called while not on main.")
+        return detect_state(logger)
+    
     # handling various popups that may still be in the way on the WoT main
     # menu.
     handle_battle_results_popups(logger)

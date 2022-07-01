@@ -297,7 +297,10 @@ def wait_for_wot_main(logger):
             logger.log("Waited too long for WOT main")
             return "quit"
 
+    time.sleep(3)
     logger.log("Done waiting for WOT main.")
+    time.sleep(3)
+    
 
 
 def check_for_esc_menu():
@@ -377,8 +380,9 @@ def handle_battle_results_popups(logger):
 
 
 def handle_tribunal_popup(logger):
-    logger.log("Handling tribunal popup.")
+    
     if check_for_tribunal_popup():
+        logger.log("Handling tribunal popup.")
         # code to handle tribunal popup
         pydirectinput.click(1141, 797, clicks=3, interval=0.2)
         time.sleep(1)

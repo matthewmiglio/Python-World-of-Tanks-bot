@@ -239,7 +239,7 @@ def restart_state(launcher_path):
     logger.add_fight()
     if restart_wot(logger, launcher_path) == "quit":
         return "restart"
-    return detect_state()
+    return detect_state(logger)
 
 
 def main():

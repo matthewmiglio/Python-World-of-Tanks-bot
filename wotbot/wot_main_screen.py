@@ -7,6 +7,7 @@ import pydirectinput
 import pygetwindow
 from cv2 import getWindowImageRect
 from matplotlib import pyplot as plt
+from wotbot.__main__ import detect_state
 
 from wotbot.client import (check_quit_key_press, orientate_WOT_launcher,
                            screenshot, wait_for_start_WOT_buttom_to_be_orange)
@@ -356,6 +357,10 @@ def restart_wot(logger, launcher_path):
     time.sleep(2)
 
     logger.log("Done restarting client. Waiting for main menu to appear.")
+    
+    if detect_state() == "random_battle_fight":
+        return "random_battle_fight"
+    
     if wait_for_wot_main(logger) == "quit":
         return "quit"
 

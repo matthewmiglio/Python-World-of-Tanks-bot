@@ -247,8 +247,14 @@ def restart_state(launcher_path):
     orientate_client("WoT client", logger, resize=[1936, 1119])
     time.sleep(1)
     logger.add_fight()
-    if restart_wot(logger, launcher_path) == "quit":
+    
+    output=restart_wot(logger, launcher_path)
+    
+    if output == "quit":
         return "restart"
+    if output == "random_battle_fight":
+        return "random_battle_fight"
+    
     return detect_state(logger)
 
 

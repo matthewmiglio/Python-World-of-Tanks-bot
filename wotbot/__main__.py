@@ -236,6 +236,7 @@ def restart_state(launcher_path):
     check_quit_key_press()
     orientate_client("WoT client", logger, resize=[1936, 1119])
     time.sleep(1)
+    logger.add_fight()
     if restart_wot(logger, launcher_path) == "quit":
         return "restart"
     return "start"

@@ -136,7 +136,9 @@ def random_battle_fight_state(logger):
         logger.log("random_battle_fight_state got called while not in a battle.")
         return detect_state(logger)
 
-    alive = True
+    alive = not(check_if_dead())
+    
+    
     while alive:
         check_quit_key_press()
 

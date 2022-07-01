@@ -68,13 +68,37 @@ def orientate_client(title, logger, resize=None):
 
 
 def check_if_windows_exist(logger):
+    # try:
+    #     pygetwindow.getWindowsWithTitle('MEmu')[0]
+    #     pygetwindow.getWindowsWithTitle('Multiple Instance Manager')[0]
+    # except (IndexError, KeyError):
+    #     logger.log("MEmu or Multiple Instance Manager not detected!")
+    #     return False
+    # return True
+
+
     try:
+        #try to get memu
         pygetwindow.getWindowsWithTitle('MEmu')[0]
-        pygetwindow.getWindowsWithTitle('Multiple Instance Manager')[0]
-    except (IndexError, KeyError):
-        logger.log("MEmu or Multiple Instance Manager not detected!")
+    except:
+        #if i cant find memu i always return false
+        logger.log("MEmu not found. Make sure MEmu and Multiple Instance Manager are both open before running the program.")
         return False
+    try: 
+        #try to get MIM with normal name
+        pygetwindow.getWindowsWithTitle('Multiple Instance Manager')[0]
+    except:
+        #if that didnt work try to get MIM with other name.
+        try:
+            pygetwindow.getWindowsWithTitle('Multi-MEmu')[0]
+        except:
+            #if that didnt work either then there is no MIM so return false
+            logger.log("Multi-Instance Manager not found. Make sure MEmu and Multiple Instance Manager are both open before running the program.")
+            return False
+        
     return True
+    
+    
 
 
 def check_if_on_memu_main():

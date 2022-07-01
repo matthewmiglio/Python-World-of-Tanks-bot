@@ -282,21 +282,21 @@ def wait_for_wot_main(logger):
     waiting_loops = 0
     while waiting:
         time.sleep(1)
+        
         check_for_esc_menu()
         check_quit_key_press()
         handle_battle_results_popups(logger)
         handle_tribunal_popup(logger)
-
+        handle_mission_completed()
+        
         waiting_loops = waiting_loops + 1
         logger.log(f"waiting for WOT main: {waiting_loops}")
-        time.sleep(1)
-        handle_mission_completed()
         if check_if_on_wot_main():
             waiting = False
         if waiting_loops > 100:
             logger.log("Waited too long for WOT main")
             return "quit"
-
+        
     time.sleep(3)
     logger.log("Done waiting for WOT main.")
     time.sleep(3)

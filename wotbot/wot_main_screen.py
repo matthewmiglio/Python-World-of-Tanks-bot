@@ -152,11 +152,6 @@ def check_if_dead():
 
 
 def detect_state(logger):
-    handle_battle_results_popups(logger)
-    handle_mission_completed()
-    handle_tribunal_popup(logger)
-    handle_tour_of_duty_popup(logger)
-
     if check_if_dead():
         logger.log("Detected tank is dead. Going to garage.")
         return "battle_over"
@@ -372,13 +367,6 @@ def verify_clusters_for_details(coord_list):
     return None
 
 
-def handle_manageable_exp(logger):
-    if check_for_apply_manageable_exp_button():
-        logger.log("Handling manageable exp")
-        pydirectinput.click(778, 574, clicks=2, interval=0.2)
-        pydirectinput.moveTo(555, 555, duration=0.5)
-        time.sleep(0.3)
-
 
 def check_for_apply_manageable_exp_button():
     current_image = screenshot()
@@ -422,11 +410,6 @@ def check_for_tour_of_duty_popup():
     return check_for_location(locations)
 
 
-def handle_tour_of_duty_popup(logger):
-    if check_for_tour_of_duty_popup():
-        logger.log("Handling tour of duty popup")
-        pydirectinput.press('esc')
-        time.sleep(0.2)
 
 
 def wait_for_wot_main(logger):
@@ -484,34 +467,6 @@ def check_for_esc_menu():
         time.sleep(0.2)
 
 
-def handle_battle_results_popups(logger):
-
-    handle_tour_of_duty_popup(logger)
-    handle_tour_of_duty_popup(logger)
-    handle_tour_of_duty_popup(logger)
-
-    if check_for_battle_results_popup():
-        logger.log("Handling battle results popup.")
-
-        handle_tour_of_duty_popup(logger)
-
-        handle_manageable_exp(logger)
-
-        # clearing battle results popup page
-        pydirectinput.click(1460, 211, clicks=2, interval=0.2)
-        pydirectinput.moveTo(555, 555, duration=1)
-        time.sleep(1)
-
-
-def handle_tribunal_popup(logger):
-    
-    if check_for_tribunal_popup():
-        logger.log("Handling tribunal popup.")
-        # code to handle tribunal popup
-        pydirectinput.click(1141, 797, clicks=3, interval=0.2)
-        time.sleep(1)
-        pydirectinput.moveTo(555, 555, duration=2)
-        time.sleep(1)
 
 
 def check_for_tribunal_popup():
@@ -555,10 +510,6 @@ def check_for_battle_results_popup():
     )
     return check_for_location(locations)
 
-
-def handle_mission_completed():
-    if check_if_mission_completed_exists():
-        pydirectinput.click(1827, 112, clicks=2, interval=0.2)
 
 
 def check_if_mission_completed_exists():

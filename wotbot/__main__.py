@@ -15,9 +15,10 @@ from PIL import Image
 from wotbot.client import check_quit_key_press, orientate_client
 from wotbot.configuration import load_user_settings
 from wotbot.fight import autorun, check_if_moving, check_if_waiting_for_battle, move_turret_randomly
+from wotbot.handling import handle_all_for_wot_main
 
 from wotbot.logger import Logger
-from wotbot.wot_main_screen import check_if_dead, check_if_in_battle, check_if_on_wot_main, collect_manageable_exp_from_main, detect_state, handle_battle_results_popups, handle_manageable_exp, handle_mission_completed, handle_tour_of_duty_popup, handle_tribunal_popup, restart_wot, select_tank, wait_for_wot_main
+from wotbot.wot_main_screen import check_if_dead, check_if_in_battle, check_if_on_wot_main, collect_manageable_exp_from_main, detect_state, restart_wot, select_tank, wait_for_wot_main
 
 
 logger = Logger()
@@ -47,15 +48,12 @@ def start_state():
 def start_battle_state(tank_prio):
     if not(check_if_on_wot_main()):
         logger.log("start_battle_state got called while not on main.")
+        handle_all_for_wot_main()
         return detect_state(logger)
     
     # handling various popups that may still be in the way on the WoT main
     # menu.
-    handle_battle_results_popups(logger)
-    handle_manageable_exp(logger)
-    handle_mission_completed()
-    handle_tribunal_popup(logger)
-    handle_tour_of_duty_popup(logger)
+    handle_all_for_wot_main(logger)
 
     check_quit_key_press()
     logger.log("-------STATE=start_battle-------")
@@ -114,6 +112,7 @@ def random_battle_fight_state(logger):
     
     if not(check_if_in_battle()):
         logger.log("random_battle_fight_state got called while not in a battle.")
+        handle_all_for_wot_main()
         return detect_state(logger)
 
     alive = not(check_if_dead())
@@ -196,6 +195,7 @@ def random_battle_fight_state(logger):
             alive = False
         if not (check_if_in_battle()):
             logger.log("Detected we're not in a battle.")
+            handle_all_for_wot_main()
             return detect_state(logger)
         if check_if_on_wot_main():
             logger.log("Found we're on main somehow.")
@@ -230,6 +230,10 @@ def battle_over_state():
     if wait_for_wot_main(logger) == "quit":
         return "restart"
 
+    #once on WOT main handle popups
+    handle_all_for_wot_main(logger)
+
+
     # if waiting was successful, wait an extra 5 sec then run the
     # collect_manageable_exp_from_main alg
     n = random.randint(1, 2)
@@ -251,6 +255,7 @@ def restart_state(launcher_path):
     restart_wot(logger, launcher_path)
     
     
+    handle_all_for_wot_main()
     return detect_state(logger)
 
 

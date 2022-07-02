@@ -69,6 +69,10 @@ def start_state():
 
 
 def start_battle_state(tank_prio):
+    if not(check_if_on_wot_main()):
+        logger.log("start_battle_state got called while not on main.")
+        return detect_state(logger)
+    
     # handling various popups that may still be in the way on the WoT main
     # menu.
     handle_battle_results_popups(logger)
@@ -131,8 +135,14 @@ def random_battle_fight_state(logger):
     check_quit_key_press()
     logger.log("-------STATE=random_battle_fight-------")
     check_quit_key_press()
+    
+    if not(check_if_in_battle()):
+        logger.log("random_battle_fight_state got called while not in a battle.")
+        return detect_state(logger)
 
-    alive = True
+    alive = not(check_if_dead())
+    
+    
     while alive:
         check_quit_key_press()
 
@@ -236,9 +246,16 @@ def restart_state(launcher_path):
     check_quit_key_press()
     orientate_client("WoT client", logger, resize=[1936, 1119])
     time.sleep(1)
-    if restart_wot(logger, launcher_path) == "quit":
+    logger.add_fight()
+    
+    output=restart_wot(logger, launcher_path)
+    
+    if output == "quit":
         return "restart"
-    return "start"
+    if output == "random_battle_fight":
+        return "random_battle_fight"
+    
+    return detect_state(logger)
 
 
 def main():

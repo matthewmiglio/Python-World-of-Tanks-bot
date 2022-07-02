@@ -12,6 +12,7 @@ class Logger:
         self.wins = 0
         self.losses = 0
         self.fights = 0
+        self.restarts = 0
 
     def make_timestamp(self):
         """creates a time stamp for log output
@@ -37,8 +38,9 @@ class Logger:
         wins_str = str(self.wins) + "W"
         losses_str = str(self.losses) + "L"
         fights_str = str(self.fights) + " Fights"
+        restarts_str = str(self.restarts) + " Restarts"
         gap_str = "|"
-        return gap_str + fights_str + gap_str
+        return gap_str + fights_str + gap_str + restarts_str + gap_str
 
     def convert_int_to_time(self, seconds):
         """convert epoch to time
@@ -78,3 +80,9 @@ class Logger:
         """add fight to log
         """
         self.fights += 1
+        
+    def add_restart(self):
+        """add restart to log
+        """
+        self.restart += 1
+

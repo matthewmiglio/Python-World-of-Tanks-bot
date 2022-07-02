@@ -7,6 +7,7 @@ import pydirectinput
 import pygetwindow
 from cv2 import getWindowImageRect
 from matplotlib import pyplot as plt
+from wotbot.__main__ import detect_state
 
 from wotbot.client import (check_quit_key_press, orientate_WOT_launcher,
                            screenshot, wait_for_start_WOT_buttom_to_be_orange)
@@ -282,22 +283,25 @@ def wait_for_wot_main(logger):
     waiting_loops = 0
     while waiting:
         time.sleep(1)
+        
         check_for_esc_menu()
         check_quit_key_press()
         handle_battle_results_popups(logger)
         handle_tribunal_popup(logger)
-
+        handle_mission_completed()
+        
         waiting_loops = waiting_loops + 1
         logger.log(f"waiting for WOT main: {waiting_loops}")
-        time.sleep(1)
-        handle_mission_completed()
         if check_if_on_wot_main():
             waiting = False
         if waiting_loops > 100:
             logger.log("Waited too long for WOT main")
             return "quit"
-
+        
+    time.sleep(3)
     logger.log("Done waiting for WOT main.")
+    time.sleep(3)
+    
 
 
 def check_for_esc_menu():
@@ -353,6 +357,10 @@ def restart_wot(logger, launcher_path):
     time.sleep(2)
 
     logger.log("Done restarting client. Waiting for main menu to appear.")
+    
+    if detect_state() == "random_battle_fight":
+        return "random_battle_fight"
+    
     if wait_for_wot_main(logger) == "quit":
         return "quit"
 
@@ -377,8 +385,9 @@ def handle_battle_results_popups(logger):
 
 
 def handle_tribunal_popup(logger):
-    logger.log("Handling tribunal popup.")
+    
     if check_for_tribunal_popup():
+        logger.log("Handling tribunal popup.")
         # code to handle tribunal popup
         pydirectinput.click(1141, 797, clicks=3, interval=0.2)
         time.sleep(1)
@@ -504,7 +513,7 @@ def select_tank(logger, tank_prio):
             if check_if_battle_button_exists():
                 logger.log("Slot 1 tank is ready. Starting battle.")
                 pydirectinput.click(960, 50, clicks=2, interval=0.2)
-            return
+                return
         if tank_prio[index] == 2:
             logger.log("Checking tank in slot 2.")
             pydirectinput.click(
@@ -516,7 +525,7 @@ def select_tank(logger, tank_prio):
             if check_if_battle_button_exists():
                 logger.log("Slot 2 tank is ready. Starting battle.")
                 pydirectinput.click(960, 50, clicks=2, interval=0.2)
-            return
+                return
         if tank_prio[index] == 3:
             logger.log("Checking tank in slot 3.")
             pydirectinput.click(
@@ -528,7 +537,7 @@ def select_tank(logger, tank_prio):
             if check_if_battle_button_exists():
                 logger.log("Slot 3 tank is ready. Starting battle.")
                 pydirectinput.click(960, 50, clicks=2, interval=0.2)
-            return
+                return
         if tank_prio[index] == 4:
             logger.log("Checking tank in slot 4.")
             pydirectinput.click(
@@ -540,7 +549,7 @@ def select_tank(logger, tank_prio):
             if check_if_battle_button_exists():
                 logger.log("Slot 4 tank is ready. Starting battle.")
                 pydirectinput.click(960, 50, clicks=2, interval=0.2)
-            return
+                return
 
         index = index + 1
 

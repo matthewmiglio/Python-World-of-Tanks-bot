@@ -154,8 +154,8 @@ def random_battle_fight_state(logger):
         if n==2:
             pydirectinput.keyDown('s')
             time.sleep(random.randint(1,3))
-            pydirectinput.keyDown('s')
-            pydirectinput.keyUp('a')
+            pydirectinput.keyUp('s')
+            pydirectinput.keyDown('a')
             time.sleep(random.randint(1,3))
             pydirectinput.keyUp('a')
 

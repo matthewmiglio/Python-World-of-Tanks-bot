@@ -13,39 +13,14 @@ from PIL import Image
 
 from wotbot.client import check_quit_key_press, orientate_client
 from wotbot.configuration import load_user_settings
-from wotbot.fight import (autorun, check_if_dead, check_if_in_battle,
-                          check_if_moving, check_if_waiting_for_battle,
-                          move_turret_randomly, screenshot_minimap)
+from wotbot.fight import autorun, check_if_moving, check_if_waiting_for_battle, move_turret_randomly
+
 from wotbot.logger import Logger
-from wotbot.wot_main_screen import (check_if_on_wot_main,
-                                    collect_manageable_exp_from_main,
-                                    handle_battle_results_popups,
-                                    handle_manageable_exp,
-                                    handle_mission_completed,
-                                    handle_tour_of_duty_popup,
-                                    handle_tribunal_popup, restart_wot,
-                                    select_tank, wait_for_wot_main)
+from wotbot.wot_main_screen import check_if_dead, check_if_in_battle, check_if_on_wot_main, collect_manageable_exp_from_main, detect_state, handle_battle_results_popups, handle_manageable_exp, handle_mission_completed, handle_tour_of_duty_popup, handle_tribunal_popup, restart_wot, select_tank, wait_for_wot_main
+
 
 logger = Logger()
 
-
-def detect_state(logger):
-    handle_battle_results_popups(logger)
-    handle_mission_completed()
-    handle_tribunal_popup(logger)
-    handle_tour_of_duty_popup(logger)
-
-    if check_if_dead():
-        logger.log("Detected tank is dead. Going to garage.")
-        return "battle_over"
-    if check_if_on_wot_main():
-        logger.log("Detected WOT main")
-        return "start"
-    if check_if_in_battle():
-        logger.log("Detected battle screen")
-        return "random_battle_fight"
-    logger.log("Found no states. Restarting")
-    return "restart"
 
 
 def start_state():
@@ -167,7 +142,25 @@ def random_battle_fight_state(logger):
                 moving = False
 
         logger.log("Moving is done.")
-        pydirectinput.press('s')
+        
+        #turn around 
+        n=random.randint(1,2)
+        if n==1:
+            pydirectinput.keyDown('s')
+            pydirectinput.keyDown('a')
+            time.sleep(random.randint(1,3))
+            pydirectinput.keyUp('s')
+            pydirectinput.keyUp('a')
+        if n==2:
+            pydirectinput.keyDown('s')
+            time.sleep(random.randint(1,3))
+            pydirectinput.keyDown('s')
+            pydirectinput.keyUp('a')
+            time.sleep(random.randint(1,3))
+            pydirectinput.keyUp('a')
+
+        
+            
 
         # move turret randomly just because
         move_turret_randomly()
@@ -248,12 +241,8 @@ def restart_state(launcher_path):
     time.sleep(1)
     logger.add_fight()
     
-    output=restart_wot(logger, launcher_path)
+    restart_wot(logger, launcher_path)
     
-    if output == "quit":
-        return "restart"
-    if output == "random_battle_fight":
-        return "random_battle_fight"
     
     return detect_state(logger)
 

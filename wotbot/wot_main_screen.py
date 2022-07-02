@@ -7,13 +7,167 @@ import pydirectinput
 import pygetwindow
 from cv2 import getWindowImageRect
 from matplotlib import pyplot as plt
-from wotbot.__main__ import detect_state
+
+
 
 from wotbot.client import (check_quit_key_press, orientate_WOT_launcher,
                            screenshot, wait_for_start_WOT_buttom_to_be_orange)
 from wotbot.image_rec import (check_for_location, coords_is_equal,
                               find_references, get_first_location,
                               pixel_is_equal)
+
+
+
+def restart_wot(logger, launcher_path):
+    #add restart to logger
+    logger.add_restart()
+    
+    #Close WoT window if its open. If its not open do nothing.
+    logger.log("Trying to close WoT window.")
+    try:
+        logger.log("Closing WoT window")
+        WOT_client = pygetwindow.getWindowsWithTitle("WoT Client")[0]
+        WOT_client.close()
+        time.sleep(3)
+    except BaseException:
+        logger.log("Game is not already open. No matter.")
+
+    #Open WoT Launcher using path in config file
+    logger.log("Opening WOT launcher.")
+    wot_launcher_path = launcher_path
+    os.system(wot_launcher_path)
+    time.sleep(3)
+
+    #orientate WoT launcher
+    logger.log("Orientating WOT launcher")
+    orientate_WOT_launcher()
+
+    #Wait for start game button to reach ready state.
+    logger.log("Waiting for start.")
+    wait_for_start_WOT_buttom_to_be_orange()
+
+    #Use orange button to start WoT Client
+    logger.log("Opening WOT client")
+    pydirectinput.click(150, 530)
+    time.sleep(2)
+
+    logger.log("Done opening client.")
+    time.sleep(5)
+    
+    #waiting for client to load and set on a screen
+    wait_for_client_loading(logger)
+    time.sleep(10)
+    
+    
+    
+    
+
+def wait_for_client_loading(logger):
+    waiting=check_if_client_is_loading()
+    waiting_loops=0
+    while waiting:
+        waiting_loops=waiting_loops+1
+        logger.log(f"Waiting for client to load: {waiting_loops}")
+        time.sleep(1)
+        waiting=check_if_client_is_loading()
+    time.sleep(3)
+    logger.log("Client done loading.")
+    time.sleep(3)
+
+def check_if_client_is_loading():
+    current_image = screenshot()
+    reference_folder = "game_loading"
+    references = [
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png",
+        "5.png",
+        "6.png",
+        "7.png",
+        "8.png",
+        "9.png",
+    ]
+
+    locations = find_references(
+        screenshot=current_image,
+        folder=reference_folder,
+        names=references,
+        tolerance=0.97
+    )
+    return check_for_location(locations)
+
+
+def check_if_in_battle():
+    current_image = screenshot()
+    reference_folder = "in_game"
+    references = [
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png",
+        "5.png",
+
+
+    ]
+
+    locations = find_references(
+        screenshot=current_image,
+        folder=reference_folder,
+        names=references,
+        tolerance=0.97
+    )
+    return check_for_location(locations)
+
+
+def check_if_dead():
+    check_quit_key_press()
+    region = [0, 800, 280, 280]
+    current_image = screenshot(region=region)
+    reference_folder = "tank_dead"
+    references = [
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png",
+        "5.png",
+        "6.png",
+        "7.png",
+        "8.png",
+        "9.png",
+        "10.png",
+        "11.png",
+        "12.png",
+        "13.png",
+        "14.png",
+
+    ]
+    locations = find_references(
+        screenshot=current_image,
+        folder=reference_folder,
+        names=references,
+        tolerance=0.97
+    )
+    return check_for_location(locations)
+
+
+def detect_state(logger):
+    handle_battle_results_popups(logger)
+    handle_mission_completed()
+    handle_tribunal_popup(logger)
+    handle_tour_of_duty_popup(logger)
+
+    if check_if_dead():
+        logger.log("Detected tank is dead. Going to garage.")
+        return "battle_over"
+    if check_if_on_wot_main():
+        logger.log("Detected WOT main")
+        return "start"
+    if check_if_in_battle():
+        logger.log("Detected battle screen")
+        return "random_battle_fight"
+    logger.log("Found no states. Restarting")
+    return "restart"
 
 
 def collect_manageable_exp_from_main():
@@ -303,7 +457,6 @@ def wait_for_wot_main(logger):
     time.sleep(3)
     
 
-
 def check_for_esc_menu():
     n = 6
     while n != 0:
@@ -329,40 +482,6 @@ def check_for_esc_menu():
             pydirectinput.click(967, 797)
         n = n - 1
         time.sleep(0.2)
-
-
-def restart_wot(logger, launcher_path):
-    logger.log("Trying to close WoT window.")
-    try:
-        logger.log("Closing WoT window")
-        WOT_client = pygetwindow.getWindowsWithTitle("WoT Client")[0]
-        WOT_client.close()
-        time.sleep(3)
-    except BaseException:
-        logger.log("Game is not already open. No matter.")
-
-    logger.log("Opening WOT launcher.")
-    wot_launcher_path = launcher_path
-    os.system(wot_launcher_path)
-    time.sleep(3)
-
-    logger.log("Orientating WOT launcher")
-    orientate_WOT_launcher()
-
-    logger.log("Waiting for start.")
-    wait_for_start_WOT_buttom_to_be_orange()
-
-    logger.log("Opening WOT client")
-    pydirectinput.click(150, 530)
-    time.sleep(2)
-
-    logger.log("Done restarting client. Waiting for main menu to appear.")
-    
-    if detect_state() == "random_battle_fight":
-        return "random_battle_fight"
-    
-    if wait_for_wot_main(logger) == "quit":
-        return "quit"
 
 
 def handle_battle_results_popups(logger):

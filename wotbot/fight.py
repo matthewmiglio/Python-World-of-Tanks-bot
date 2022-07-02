@@ -5,10 +5,9 @@ import numpy
 import pydirectinput
 from matplotlib import pyplot as plt
 
-from wotbot.client import check_quit_key_press, refresh_screen, screenshot
+from wotbot.client import check_quit_key_press, screenshot
 from wotbot.image_rec import (check_for_location, find_references, get_avg_pix,
                               pixel_is_equal)
-from wotbot.minimap import determine_current_direction, find_myself_on_minimap
 from wotbot.wot_main_screen import wait_for_wot_main
 
 
@@ -107,35 +106,7 @@ def check_if_waiting_for_battle():
     return check_for_location(locations)
 
 
-def check_if_dead():
-    check_quit_key_press()
-    region = [0, 800, 280, 280]
-    current_image = screenshot(region=region)
-    reference_folder = "tank_dead"
-    references = [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-        "5.png",
-        "6.png",
-        "7.png",
-        "8.png",
-        "9.png",
-        "10.png",
-        "11.png",
-        "12.png",
-        "13.png",
-        "14.png",
 
-    ]
-    locations = find_references(
-        screenshot=current_image,
-        folder=reference_folder,
-        names=references,
-        tolerance=0.97
-    )
-    return check_for_location(locations)
 
 
 def check_if_moving():
@@ -401,20 +372,15 @@ def check_team_status():
 
 
 def move_turret_randomly():
-    n = random.randint(1, 4)
+    n = random.randint(1, 2)
     if n == 1:
-        pydirectinput.press('left')
+        pydirectinput.keyDown('left')
+        time.sleep(random.randint(1,4))
+        pydirectinput.keyUp('left')
     if n == 2:
-        pydirectinput.press('right')
-    if n == 3:
-        pydirectinput.keyDown('up')
-        time.sleep(1.5)
-        pydirectinput.keyUp('up')
-
-    if n == 4:
-        pydirectinput.keyDown('down')
-        time.sleep(1.5)
-        pydirectinput.keyUp('down')
+        pydirectinput.keyDown('right')
+        time.sleep(random.randint(1,4))
+        pydirectinput.keyUp('right')
 
 
 def veer_left():
@@ -463,23 +429,3 @@ def handle_last_alive(logger):
         return "deserted"
 
 
-def check_if_in_battle():
-    current_image = screenshot()
-    reference_folder = "in_game"
-    references = [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-        "5.png",
-
-
-    ]
-
-    locations = find_references(
-        screenshot=current_image,
-        folder=reference_folder,
-        names=references,
-        tolerance=0.97
-    )
-    return check_for_location(locations)

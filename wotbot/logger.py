@@ -84,5 +84,5 @@ class Logger:
     def add_restart(self):
         """add restart to log
         """
-        self.restart += 1
+        self.restarts += 1
 

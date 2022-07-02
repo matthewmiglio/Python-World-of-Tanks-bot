@@ -4,6 +4,7 @@ import multiprocessing
 import random
 import sys
 import time
+from xmlrpc.client import FastUnmarshaller
 
 import numpy
 import pydirectinput
@@ -139,6 +140,12 @@ def random_battle_fight_state(logger):
             time.sleep(1)
             logger.log("Still moving. Sleeping")
             if not(check_if_moving()):
+                moving = False
+            if check_if_on_wot_main():
+                moving = False
+            if check_if_dead():
+                moving = False
+            if not(check_if_in_battle()):
                 moving = False
 
         logger.log("Moving is done.")

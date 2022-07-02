@@ -1,8 +1,9 @@
 import json
 import sys
-from os.path import dirname, exists, join
+from os import makedirs
+from os.path import exists, expandvars, isdir, join
 
-top_level = dirname(__file__)
+top_level = join(expandvars(f'%appdata%'), "wot-bot")
 config_file = join(top_level, 'config.json')
 
 
@@ -19,6 +20,8 @@ def load_user_settings():
 
 
 def create_config_file():
+    if not isdir(top_level):
+        makedirs(top_level)
     if not exists(config_file):
         with open(config_file, "w") as f:
             default_config = {

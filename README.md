@@ -36,7 +36,7 @@ Run the desktop shortcut the installer created.
 
 ## Configuration
 
-All configuration is through **`lib\pyclashbot\config.json`**,
+All configuration is through **`%appdata%\wot-bot\config.json`**,
 
 #### Launcher Path
 

@@ -34,14 +34,18 @@ def handle_battle_results_popups(logger):
 
 
 def handle_tribunal_popup(logger):
-    
-    if check_for_tribunal_popup():
-        logger.log("Handling tribunal popup.")
-        # code to handle tribunal popup
-        pydirectinput.click(1141, 797, clicks=3, interval=0.2)
-        time.sleep(1)
-        pydirectinput.moveTo(555, 555, duration=2)
-        time.sleep(1)
+    #handle it twice i guess?
+    n=2
+    while n!=0:
+        n=n-1
+        #check if tribunal popup exists
+        if check_for_tribunal_popup():
+            logger.log("Handling tribunal popup.")
+            # code to handle tribunal popup
+            pydirectinput.click(1141, 797, clicks=3, interval=0.2)
+            time.sleep(1)
+            pydirectinput.moveTo(555, 555, duration=2)
+            time.sleep(1)
 
 
 def handle_manageable_exp(logger):

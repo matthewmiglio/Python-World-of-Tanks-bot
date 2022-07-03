@@ -153,17 +153,17 @@ def random_battle_fight_state(logger):
         n=random.randint(1,2)
         if n==1:
             pydirectinput.keyDown('s')
-            pydirectinput.keyDown('a')
+            pydirectinput.keyDown('d')
             time.sleep(random.randint(1,3))
             pydirectinput.keyUp('s')
-            pydirectinput.keyUp('a')
+            pydirectinput.keyUp('d')
         if n==2:
             pydirectinput.keyDown('s')
             time.sleep(random.randint(1,3))
             pydirectinput.keyUp('s')
-            pydirectinput.keyDown('a')
+            pydirectinput.keyDown('d')
             time.sleep(random.randint(1,3))
-            pydirectinput.keyUp('a')
+            pydirectinput.keyUp('d')
 
         
             

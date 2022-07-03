@@ -149,27 +149,14 @@ def random_battle_fight_state(logger):
 
         logger.log("Moving is done.")
         
-        #turn around 
-        n=random.randint(1,2)
-        if n==1:
-            pydirectinput.keyDown('s')
-            pydirectinput.keyDown('a')
-            time.sleep(random.randint(1,3))
-            pydirectinput.keyUp('s')
-            pydirectinput.keyUp('a')
-        if n==2:
-            pydirectinput.keyDown('s')
-            time.sleep(random.randint(1,3))
-            pydirectinput.keyUp('s')
-            pydirectinput.keyDown('d')
-            time.sleep(random.randint(1,3))
-            pydirectinput.keyUp('d')
-
-        
-            
 
         # move turret randomly just because
         move_turret_randomly()
+
+        #little bit of s key
+        pydirectinput.keyDown('s')
+        time.sleep(2)
+        pydirectinput.keyUp('s')
 
         # turn left sometimes
         turn_duration = random.randint(1, 3)

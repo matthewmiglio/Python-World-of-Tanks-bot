@@ -99,9 +99,7 @@ def wait_for_client_loading(logger):
         logger.log(f"Waiting for client to load: {waiting_loops}")
         time.sleep(1)
         waiting=check_if_client_is_loading()
-    time.sleep(3)
     logger.log("Client done loading.")
-    time.sleep(3)
 
 
 def check_if_client_is_loading():
@@ -124,9 +122,7 @@ def check_if_client_is_loading():
     
     #even if only 1 check thinks we're loading, we're loading.
     return True
-    
-    
-
+     
 
 def look_for_client_loading():
     current_image = screenshot()

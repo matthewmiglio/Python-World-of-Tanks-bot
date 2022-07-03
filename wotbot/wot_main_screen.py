@@ -105,6 +105,30 @@ def wait_for_client_loading(logger):
 
 
 def check_if_client_is_loading():
+    #Check every third second 6 times if we're loading.
+    check1=look_for_client_loading()
+    time.sleep(0.33)
+    check2=look_for_client_loading()
+    time.sleep(0.33)
+    check3=look_for_client_loading()
+    time.sleep(0.33)
+    check4=look_for_client_loading()
+    time.sleep(0.33)
+    check5=look_for_client_loading()
+    time.sleep(0.33)
+    check6=look_for_client_loading()
+    time.sleep(0.33)
+    #if every time we checked said we're not loading, then we're definitely not loading.
+    if (check1==False)and(check2==False)and(check3==False)and(check4==False)and(check5==False)and(check6==False):
+        return False
+    
+    #even if only 1 check thinks we're loading, we're loading.
+    return True
+    
+    
+
+
+def look_for_client_loading():
     current_image = screenshot()
     reference_folder = "game_loading"
     references = [
@@ -117,6 +141,13 @@ def check_if_client_is_loading():
         "7.png",
         "8.png",
         "9.png",
+        "10.png",
+        "11.png",
+        "12.png",
+        "13.png",
+        "14.png",
+        "15.png",
+        "16.png",
     ]
 
     locations = find_references(

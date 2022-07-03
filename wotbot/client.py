@@ -98,8 +98,6 @@ def check_if_windows_exist(logger):
         
     return True
     
-    
-
 
 def check_if_on_memu_main():
     references = [

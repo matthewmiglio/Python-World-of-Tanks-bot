@@ -153,10 +153,10 @@ def random_battle_fight_state(logger):
         n=random.randint(1,2)
         if n==1:
             pydirectinput.keyDown('s')
-            pydirectinput.keyDown('d')
+            pydirectinput.keyDown('a')
             time.sleep(random.randint(1,3))
             pydirectinput.keyUp('s')
-            pydirectinput.keyUp('d')
+            pydirectinput.keyUp('a')
         if n==2:
             pydirectinput.keyDown('s')
             time.sleep(random.randint(1,3))
@@ -180,6 +180,7 @@ def random_battle_fight_state(logger):
             pydirectinput.keyDown('a')
             time.sleep(turn_duration)
             pydirectinput.keyUp('a')
+        #mostly turn right
         else:
             check_quit_key_press()
             logger.log("Turning right.")

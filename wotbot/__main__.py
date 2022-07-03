@@ -102,7 +102,7 @@ def start_battle_state(tank_prio):
         logger.log(f"Waiting...{n}")
         time.sleep(1)
 
-    return "random_battle_fight"
+    return detect_state(logger)
 
 
 def random_battle_fight_state(logger):
@@ -236,14 +236,15 @@ def battle_over_state():
 
     # if waiting was successful, wait an extra 5 sec then run the
     # collect_manageable_exp_from_main alg
-    n = random.randint(1, 2)
-    if n == 1:
-        time.sleep(5)
-        logger.log("Collecting manageable exp.")
-        collect_manageable_exp_from_main()
+    if check_if_on_wot_main():
+        n = random.randint(1, 2)
+        if n == 1:
+            time.sleep(5)
+            logger.log("Collecting manageable exp.")
+            collect_manageable_exp_from_main()
 
     # pass to start state if things managed to get to this point
-    return "start"
+    return detect_state(logger)
 
 
 def restart_state(launcher_path):

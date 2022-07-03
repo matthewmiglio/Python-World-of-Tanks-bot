@@ -9,7 +9,7 @@ from wotbot.client import check_if_windows_exist
 from wotbot.configuration import load_user_settings
 
 from wotbot.logger import Logger
-from wotbot.wot_main_screen import check_if_client_is_loading
+from wotbot.wot_main_screen import check_if_client_is_loading, check_if_launcher_is_open, wait_for_launcher_to_open
 
 logger = Logger()
 
@@ -18,6 +18,8 @@ logger = Logger()
 #     plt.imshow(numpy.asarray(screenshot()))
 #     plt.show()
 
-user_settings = load_user_settings()
-launcher_path = user_settings["launcher_path"]
-restart_state(launcher_path)
+# user_settings = load_user_settings()
+# launcher_path = user_settings["launcher_path"]
+# restart_state(launcher_path)
+
+wait_for_launcher_to_open(logger)

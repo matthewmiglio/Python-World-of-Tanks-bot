@@ -1,3 +1,4 @@
+from multiprocessing.connection import wait
 import os
 import random
 import time
@@ -36,7 +37,9 @@ def restart_wot(logger, launcher_path):
     logger.log("Opening WOT launcher.")
     wot_launcher_path = launcher_path
     os.system(wot_launcher_path)
-    time.sleep(3)
+    
+    #wait for launcher to open up
+    wait_for_launcher_to_open(logger)
 
     #orientate WoT launcher
     logger.log("Orientating WOT launcher")
@@ -52,14 +55,40 @@ def restart_wot(logger, launcher_path):
     time.sleep(2)
 
     logger.log("Done opening client.")
-    time.sleep(5)
+    time.sleep(15)
     
     #waiting for client to load and set on a screen
     wait_for_client_loading(logger)
     time.sleep(10)
     
     
+def wait_for_launcher_to_open(logger):
+    waiting_loops=0
+    launcher_open=check_if_launcher_is_open()
+    while not(launcher_open):
+        time.sleep(1)
+        waiting_loops=waiting_loops+1
+        logger.log(f"Waiting for launcher to open {waiting_loops}")
+        if waiting_loops>100:
+            logger.log("Waited too long for launcher to open. Restarting restart alg.")
+        launcher_open=check_if_launcher_is_open()
     
+    logger.log("Launcher detected.")
+    
+    
+def check_if_launcher_is_open():
+    windows=pygetwindow.getAllTitles()
+    # print(windows)
+
+    
+    n=(len(windows))-1
+    while n!=-1:
+        current_window=windows[n]
+        if current_window.startswith('Wargaming'):
+            return True
+        n=n-1
+    
+    return False
     
 
 def wait_for_client_loading(logger):
@@ -73,6 +102,7 @@ def wait_for_client_loading(logger):
     time.sleep(3)
     logger.log("Client done loading.")
     time.sleep(3)
+
 
 def check_if_client_is_loading():
     current_image = screenshot()
@@ -96,7 +126,7 @@ def check_if_client_is_loading():
         tolerance=0.97
     )
     return check_for_location(locations)
-
+    
 
 def check_if_in_battle():
     current_image = screenshot()

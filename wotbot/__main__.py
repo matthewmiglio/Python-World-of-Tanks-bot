@@ -257,7 +257,7 @@ def restart_state(launcher_path):
     restart_wot(logger, launcher_path)
     
     
-    handle_all_for_wot_main()
+    handle_all_for_wot_main(logger)
     return detect_state(logger)
 
 

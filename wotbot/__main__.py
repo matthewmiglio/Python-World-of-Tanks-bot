@@ -277,6 +277,18 @@ def main():
             sys.exit()
 
 
+def end_loop():
+    print("Press ctrl-c to close the program.")
+    try:
+        while True:
+            pass
+    except KeyboardInterrupt:
+        sys.exit()
+
+
 if __name__ == '__main__':
-    multiprocessing.freeze_support()
-    main()
+    try:
+        multiprocessing.freeze_support()
+        main()
+    finally:
+        end_loop()

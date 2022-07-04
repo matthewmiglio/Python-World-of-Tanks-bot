@@ -14,13 +14,13 @@ from PIL import Image
 
 from wotbot.client import check_quit_key_press, orientate_client
 from wotbot.configuration import load_user_settings
-from wotbot.fight import autorun, check_if_moving, check_if_waiting_for_battle, move_turret_randomly
+from wotbot.fight import autorun, check_if_moving, check_if_waiting_for_battle, handle_last_alive, move_turret_randomly
 from wotbot.handling import handle_all_for_wot_main
 
 from wotbot.logger import Logger
 from wotbot.wot_main_screen import check_if_dead, check_if_in_battle, check_if_on_wot_main, collect_manageable_exp_from_main, detect_state, restart_wot, select_tank, wait_for_wot_main
-
-
+   
+   
 logger = Logger()
 
 
@@ -146,6 +146,13 @@ def random_battle_fight_state(logger):
                 moving = False
             if not(check_if_in_battle()):
                 moving = False
+                
+            logger.log("Checking if last alive.")
+            if handle_last_alive()=="deserted":
+                return detect_state()
+                
+            
+            
 
         logger.log("Moving is done.")
         

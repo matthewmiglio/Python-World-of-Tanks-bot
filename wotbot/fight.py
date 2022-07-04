@@ -403,3 +403,28 @@ def veer_right():
     time.sleep(3)
 
 
+def handle_last_alive(logger):
+    if check_team_status() < 5:
+        # if there only like 5 teammates left
+        logger.log("Deserting because tank is like last alive.")
+        time.sleep(1)
+        pydirectinput.press('esc')
+        time.sleep(1)
+        pydirectinput.click(960, 542, clicks=3, interval=0.2)
+        time.sleep(1)
+        pydirectinput.moveTo(500, 500, duration=0.2)
+        time.sleep(1)
+        pydirectinput.click(1041, 751, clicks=6, interval=0.2)
+        time.sleep(1)
+        pydirectinput.moveTo(500, 500, duration=0.2)
+        time.sleep(1)
+        pydirectinput.click(1041, 751, clicks=6, interval=0.2)
+        time.sleep(1)
+        pydirectinput.moveTo(500, 500, duration=0.2)
+        time.sleep(1)
+        if wait_for_wot_main(logger) == "quit":
+            return "quit"
+        time.sleep(3)
+
+        return "deserted"
+

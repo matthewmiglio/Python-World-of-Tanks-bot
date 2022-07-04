@@ -13,6 +13,7 @@ from matplotlib import pyplot as plt
 
 from wotbot.client import (check_quit_key_press, orientate_WOT_launcher,
                            screenshot, wait_for_start_WOT_buttom_to_be_orange)
+from wotbot.handling import handle_battle_results_popups, handle_mission_completed, handle_tribunal_popup
 from wotbot.image_rec import (check_for_location, coords_is_equal,
                               find_references, get_first_location,
                               pixel_is_equal)
@@ -425,48 +426,6 @@ def verify_clusters_for_details(coord_list):
 
 
 
-def check_for_apply_manageable_exp_button():
-    current_image = screenshot()
-    reference_folder = "manageable_exp_button"
-    references = [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-        "5.png",
-
-    ]
-
-    locations = find_references(
-        screenshot=current_image,
-        folder=reference_folder,
-        names=references,
-        tolerance=0.97
-    )
-    return check_for_location(locations)
-
-
-def check_for_tour_of_duty_popup():
-    current_image = screenshot()
-    reference_folder = "tour_of_duty_popup"
-    references = [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-        "5.png",
-
-    ]
-
-    locations = find_references(
-        screenshot=current_image,
-        folder=reference_folder,
-        names=references,
-        tolerance=0.97
-    )
-    return check_for_location(locations)
-
-
 
 
 def wait_for_wot_main(logger):
@@ -524,69 +483,6 @@ def check_for_esc_menu():
         time.sleep(0.2)
 
 
-
-
-def check_for_tribunal_popup():
-    current_image = screenshot()
-    reference_folder = "tribunal_popup"
-    references = [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-        "5.png",
-
-    ]
-
-    locations = find_references(
-        screenshot=current_image,
-        folder=reference_folder,
-        names=references,
-        tolerance=0.97
-    )
-    return check_for_location(locations)
-
-
-def check_for_battle_results_popup():
-    current_image = screenshot()
-    reference_folder = "battle_results_popup"
-    references = [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-        "5.png",
-
-    ]
-
-    locations = find_references(
-        screenshot=current_image,
-        folder=reference_folder,
-        names=references,
-        tolerance=0.97
-    )
-    return check_for_location(locations)
-
-
-
-def check_if_mission_completed_exists():
-    current_image = screenshot()
-    reference_folder = "mission_completed_button"
-    references = [
-        "1.png",
-        "2.png",
-        "3.png",
-        "4.png",
-        "5.png",
-    ]
-
-    locations = find_references(
-        screenshot=current_image,
-        folder=reference_folder,
-        names=references,
-        tolerance=0.97
-    )
-    return check_for_location(locations)
 
 
 def check_if_on_wot_main():

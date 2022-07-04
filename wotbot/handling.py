@@ -2,9 +2,9 @@
 
 import pydirectinput
 import time
-from wotbot.fight import check_team_status
 
-from wotbot.wot_main_screen import check_for_apply_manageable_exp_button, check_for_battle_results_popup, check_for_tour_of_duty_popup, check_for_tribunal_popup, check_if_mission_completed_exists
+from wotbot.client import screenshot
+from wotbot.image_rec import check_for_location, find_references
 
 
 def handle_tour_of_duty_popup(logger):
@@ -56,35 +56,13 @@ def handle_manageable_exp(logger):
         time.sleep(0.3)
 
 
-def handle_last_alive(logger):
-    if check_team_status() < 5:
-        # if there only like 5 teammates left
-        logger.log("Deserting because tank is like last alive.")
-        time.sleep(1)
-        pydirectinput.press('esc')
-        time.sleep(1)
-        pydirectinput.click(960, 542, clicks=3, interval=0.2)
-        time.sleep(1)
-        pydirectinput.moveTo(500, 500, duration=0.2)
-        time.sleep(1)
-        pydirectinput.click(1041, 751, clicks=6, interval=0.2)
-        time.sleep(1)
-        pydirectinput.moveTo(500, 500, duration=0.2)
-        time.sleep(1)
-        pydirectinput.click(1041, 751, clicks=6, interval=0.2)
-        time.sleep(1)
-        pydirectinput.moveTo(500, 500, duration=0.2)
-        time.sleep(1)
-        if wait_for_wot_main(logger) == "quit":
-            return "quit"
-        time.sleep(3)
-
-        return "deserted"
-
-
-def handle_mission_completed():
+def handle_mission_completed(logger):
     if check_if_mission_completed_exists():
+        logger.log("Handling mission completed")
         pydirectinput.click(1827, 112, clicks=2, interval=0.2)
+        time.sleep(0.2)
+        pydirectinput.moveTo(555,555)
+        time.sleep(0.2)
 
 
 def handle_all_for_wot_main(logger):
@@ -94,6 +72,142 @@ def handle_all_for_wot_main(logger):
         handle_battle_results_popups(logger)
         handle_tribunal_popup(logger)
         handle_manageable_exp(logger)
-        handle_mission_completed()
+        handle_mission_completed(logger)
+        handle_credit_reserve_popup(logger)
         n=n-1 
     
+    
+def handle_credit_reserve_popup(logger):
+    if check_for_credit_reserve_popup():
+        logger.log("Handling credit reserve popup.")
+        pydirectinput.click(965,781,clicks=3,interval=0.2)
+        time.sleep(0.2)
+        pydirectinput.moveTo(555,555)
+        time.sleep(0.2)
+
+    
+def check_for_credit_reserve_popup():
+    current_image = screenshot()
+    reference_folder = "credit_reserve_popup"
+    references = [
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png",
+        "5.png",
+
+    ]
+
+    locations = find_references(
+        screenshot=current_image,
+        folder=reference_folder,
+        names=references,
+        tolerance=0.97
+    )
+    return check_for_location(locations)
+
+    
+def check_for_apply_manageable_exp_button():
+    current_image = screenshot()
+    reference_folder = "manageable_exp_button"
+    references = [
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png",
+        "5.png",
+
+    ]
+
+    locations = find_references(
+        screenshot=current_image,
+        folder=reference_folder,
+        names=references,
+        tolerance=0.97
+    )
+    return check_for_location(locations)
+
+
+def check_for_tour_of_duty_popup():
+    current_image = screenshot()
+    reference_folder = "tour_of_duty_popup"
+    references = [
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png",
+        "5.png",
+
+    ]
+
+    locations = find_references(
+        screenshot=current_image,
+        folder=reference_folder,
+        names=references,
+        tolerance=0.97
+    )
+    return check_for_location(locations)
+
+
+def check_for_battle_results_popup():
+    current_image = screenshot()
+    reference_folder = "battle_results_popup"
+    references = [
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png",
+        "5.png",
+
+    ]
+
+    locations = find_references(
+        screenshot=current_image,
+        folder=reference_folder,
+        names=references,
+        tolerance=0.97
+    )
+    return check_for_location(locations)
+
+
+def check_for_tribunal_popup():
+    current_image = screenshot()
+    reference_folder = "tribunal_popup"
+    references = [
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png",
+        "5.png",
+
+    ]
+
+    locations = find_references(
+        screenshot=current_image,
+        folder=reference_folder,
+        names=references,
+        tolerance=0.97
+    )
+    return check_for_location(locations)
+
+
+def check_if_mission_completed_exists():
+    current_image = screenshot()
+    reference_folder = "mission_completed_button"
+    references = [
+        "1.png",
+        "2.png",
+        "3.png",
+        "4.png",
+        "5.png",
+    ]
+
+    locations = find_references(
+        screenshot=current_image,
+        folder=reference_folder,
+        names=references,
+        tolerance=0.97
+    )
+    return check_for_location(locations)
+
+

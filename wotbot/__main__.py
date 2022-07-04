@@ -148,7 +148,7 @@ def random_battle_fight_state(logger):
                 moving = False
                 
             logger.log("Checking if last alive.")
-            if handle_last_alive()=="deserted":
+            if handle_last_alive(logger)=="deserted":
                 return detect_state()
                 
             
@@ -293,9 +293,18 @@ def end_loop():
         sys.exit()
 
 
+# if __name__ == '__main__':
+#     try:
+#         multiprocessing.freeze_support()
+#         main()
+#     finally:
+#         end_loop()
+        
+        
+
 if __name__ == '__main__':
-    try:
-        multiprocessing.freeze_support()
-        main()
-    finally:
-        end_loop()
+    multiprocessing.freeze_support()
+    main()
+
+
+   

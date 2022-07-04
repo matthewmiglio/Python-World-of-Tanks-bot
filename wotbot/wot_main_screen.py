@@ -13,7 +13,7 @@ from matplotlib import pyplot as plt
 
 from wotbot.client import (check_quit_key_press, orientate_WOT_launcher,
                            screenshot, wait_for_start_WOT_buttom_to_be_orange)
-from wotbot.handling import handle_battle_results_popups, handle_mission_completed, handle_tribunal_popup
+from wotbot.handling import check_for_apply_manageable_exp_button, handle_all_for_wot_main, handle_battle_results_popups, handle_mission_completed, handle_tribunal_popup
 from wotbot.image_rec import (check_for_location, coords_is_equal,
                               find_references, get_first_location,
                               pixel_is_equal)
@@ -436,12 +436,9 @@ def wait_for_wot_main(logger):
     waiting_loops = 0
     while waiting:
         time.sleep(1)
-        
-        check_for_esc_menu()
         check_quit_key_press()
-        handle_battle_results_popups(logger)
-        handle_tribunal_popup(logger)
-        handle_mission_completed()
+        
+        handle_all_for_wot_main(logger)
         
         waiting_loops = waiting_loops + 1
         logger.log(f"waiting for WOT main: {waiting_loops}")

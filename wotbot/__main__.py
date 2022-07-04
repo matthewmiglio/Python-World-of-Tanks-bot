@@ -293,18 +293,18 @@ def end_loop():
         sys.exit()
 
 
-# if __name__ == '__main__':
-#     try:
-#         multiprocessing.freeze_support()
-#         main()
-#     finally:
-#         end_loop()
+if __name__ == '__main__':
+    try:
+        multiprocessing.freeze_support()
+        main()
+    finally:
+        end_loop()
         
         
 
-if __name__ == '__main__':
-    multiprocessing.freeze_support()
-    main()
+# if __name__ == '__main__':
+#     multiprocessing.freeze_support()
+#     main()
 
 
    
